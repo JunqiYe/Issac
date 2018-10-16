@@ -121,9 +121,14 @@ public class AssassinManager {
       if (playerAlive.name.equalsIgnoreCase(name)) {
          temp = playerAlive;
          playerAlive = playerAlive.next;
-         temp.killer = playerAlive.name;
+         AssassinNode lastPlayer = playerAlive;
+         while (lastPlayer.next != null) {
+            lastPlayer = lastPlayer.next;
+         }
+         temp.killer = lastPlayer.name; //this should be the end of the nodes, not the first of the nodes
          if (playerDead == null) {
             playerDead = temp;
+            temp.next = null;
          } else {
             temp.next = playerDead; 
             playerDead = temp;
@@ -137,6 +142,7 @@ public class AssassinManager {
          current.next = temp.next;
          temp.killer = current.name;
          if (playerDead == null) {
+            temp.next = null;
             playerDead = temp;
          } else {
             temp.next = playerDead;
