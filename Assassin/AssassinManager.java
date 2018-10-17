@@ -19,9 +19,8 @@ public class AssassinManager {
    // should be nonempty strings and should not have duplicate names. If the
    // list is empty, throw IllegalArgumentException.
    // post: construct the AssassinManagement object. Transfer and save the
-   // player and the target the are trying to assassinate.
+   // player and the target they are trying to assassinate.
    public AssassinManager(List<String> names) {
-      
       if (names.size() == 0) {
          throw new IllegalArgumentException();
       }
@@ -34,19 +33,17 @@ public class AssassinManager {
    
    
    // post: output the names inside the killing ring. The format will be 
-   //"'someone' is stalking 'someone else'" If there are only one player left,
-   // the method will output the player is stalking him/herself.
+   // "'someone' is stalking 'someone else'" 
+   // If there are only one player left, the method will output the player is 
+   // stalking him/herself.
    public void printKillRing() {
       String firstPlayerName = playerAlive.name;
       AssassinNode current = playerAlive;
       while (current.next != null) {
-         System.out.println("    " + current.name + " is stalking " 
-                                                         + current.next.name); 
+         System.out.println("    " + current.name + " is stalking " + current.next.name); 
          current = current.next;
       }
-      System.out.println("    " + current.name + " is stalking " 
-                                                         + firstPlayerName);
- 
+      System.out.println("    " + current.name + " is stalking " + firstPlayerName);
    }
    
    
@@ -55,19 +52,14 @@ public class AssassinManager {
    // the first line of the output statement. The format for the output is 
    // "'someone' is killed by 'their killed'"
    public void printGraveyard() {
-      if (playerDead != null) {
-         
-         AssassinNode current = playerDead; 
-      
-         while (current != null) {
-            System.out.println("    " + current.name + " was killed by " + current.killer);
-            current = current.next;
-          
-         }
-      }
+      AssassinNode current = playerDead; 
+      while (current != null) {
+         System.out.println("    " + current.name + " was killed by " + current.killer);
+         current = current.next;
+      }  
    }
    
-   
+
    
    // pre : takes a string that represents one of the name of the player.
    // the method is not case sensitive.
@@ -79,8 +71,8 @@ public class AssassinManager {
    
    
    // pre : takes a string that represents the name of the player. The method
-   // is not case sensitive
-   // post: return true if the player is inside the graveyard(is dead).
+   // is not case sensitive.
+   // post: return true if the player is inside the graveyard (is dead).
    public boolean graveyardContains(String name){
       return containsInNodes(playerDead, name);
    }
@@ -117,6 +109,7 @@ public class AssassinManager {
       } else if (gameOver()) {
          throw new IllegalStateException();
       }
+      
       AssassinNode temp = null;
       if (playerAlive.name.equalsIgnoreCase(name)) {
          temp = playerAlive;
@@ -125,14 +118,8 @@ public class AssassinManager {
          while (lastPlayer.next != null) {
             lastPlayer = lastPlayer.next;
          }
-         temp.killer = lastPlayer.name; //this should be the end of the nodes, not the first of the nodes
-         if (playerDead == null) {
-            playerDead = temp;
-            temp.next = null;
-         } else {
-            temp.next = playerDead; 
-            playerDead = temp;
-         }
+         temp.killer = lastPlayer.name;
+         moveToGraveyard(temp);
       } else {
          AssassinNode current = playerAlive;
          while (!current.next.name.equalsIgnoreCase(name)) {
@@ -141,22 +128,30 @@ public class AssassinManager {
          temp = current.next;
          current.next = temp.next;
          temp.killer = current.name;
-         if (playerDead == null) {
-            temp.next = null;
-            playerDead = temp;
-         } else {
-            temp.next = playerDead;
-            playerDead = temp;
-         }
-         
+         moveToGraveyard(temp);
       }      
    }
    
    
    
+   // helper method 
+   // pre : takes a player that has been killed.
+   // post: move the player that was killed into the graveyard. 
+   private void moveToGraveyard(AssassinNode temp) {
+      if (temp == null) {
+         temp.next = null;
+         playerDead = temp;
+      } else {
+         temp.next = playerDead; 
+         playerDead = temp;
+      } 
+   }
+ 
+ 
+   
    // helpper method that reduces redundent codes
-   // pre : takes a AssassinNode to specify the front of the node and the name
-   // of the player. This method is not case sensitive.
+   // pre : takes a front variable to specify the front of the node and the
+   // name of the player. This method is not case sensitive.
    // post: returns true if the name is in the node and false otherwise.
    private boolean containsInNodes(AssassinNode front, String name) {
       AssassinNode current = front;
