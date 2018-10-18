@@ -138,13 +138,8 @@ public class AssassinManager {
    // pre : takes a player that has been killed.
    // post: move the player that was killed into the graveyard. 
    private void moveToGraveyard(AssassinNode temp) {
-      if (temp == null) {
-         temp.next = null;
-         playerDead = temp;
-      } else {
-         temp.next = playerDead; 
-         playerDead = temp;
-      } 
+      temp.next = playerDead; 
+      playerDead = temp;
    }
  
  
