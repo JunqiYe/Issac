@@ -33,7 +33,7 @@ public class AssassinManager {
    
    
    // post: output the names inside the killing ring. The format will be 
-   // "'someone' is stalking 'someone else'" 
+   // "'someone' is stalking 'someone else'".
    // If there are only one player left, the method will output the player is 
    // stalking him/herself.
    public void printKillRing() {
@@ -50,7 +50,8 @@ public class AssassinManager {
    
    // post: output the names inside the graveyard. The most recent kill will be
    // the first line of the output statement. The format for the output is 
-   // "'someone' is killed by 'their killed'"
+   // "'someone' is killed by 'their killed'". If the graveyard is empty, the
+   // method produce no output.
    public void printGraveyard() {
       AssassinNode current = playerDead; 
       while (current != null) {
@@ -64,6 +65,7 @@ public class AssassinManager {
    // pre : takes a string that represents one of the name of the player.
    // the method is not case sensitive.
    // post: returns true is the name is in the killing ring and false otherwise
+   // The method ignores the cases when comparing.
    public boolean killRingContains(String name) {
       return containsInNodes(playerAlive, name);
    }
@@ -72,7 +74,8 @@ public class AssassinManager {
    
    // pre : takes a string that represents the name of the player. The method
    // is not case sensitive.
-   // post: return true if the player is inside the graveyard (is dead).
+   // post: return true if the player is inside the graveyard (is dead). 
+   // The method ignores the cases wehen comparing.
    public boolean graveyardContains(String name){
       return containsInNodes(playerDead, name);
    }
