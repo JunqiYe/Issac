@@ -8,11 +8,12 @@ import java.util.*;
 
 public class AssassinManager {             
 
-   private AssassinNode playerAlive;// stores the front of the node that contains
-                                    // the current alive players and their target
+   private AssassinNode frontAlivePlayer;// stores the front of the node that 
+                                         //contains the current alive players
+                                         // and their target
    
-   private AssassinNode playerDead; // stores the front of the node of the people
-                                    // that are dead.  
+   private AssassinNode frontGraveyard; // stores the front of the node of the
+                                        // people that are dead.  
    
                            
    // pre : takes a List of Strings that stores the name of the players. Names
@@ -26,34 +27,33 @@ public class AssassinManager {
       }
       
       for (int i = names.size() - 1; i >= 0 ; i--) {
-         playerAlive = new AssassinNode(names.get(i), playerAlive);
+         frontAlivePlayer = new AssassinNode(names.get(i), frontAlivePlayer);
       }
    }
    
    
    
-   // post: output the names inside the killing ring. The format will be 
-   // "'someone' is stalking 'someone else'".
-   // If there are only one player left, the method will output the player is 
-   // stalking him/herself.
-   public void printKillRing() {
-      String firstPlayerName = playerAlive.name;
-      AssassinNode current = playerAlive;
+   // post: output the name of the player that are still alive and the person 
+   // they are stalking. The format will be "'someone' is stalking 'someone 
+   // else'". If there are only one player left, the method will output the 
+   // player is stalking him/herself.
+   public void printKillRing() { 
+      AssassinNode current = frontAlivePlayer;
       while (current.next != null) {
          System.out.println("    " + current.name + " is stalking " + current.next.name); 
          current = current.next;
       }
-      System.out.println("    " + current.name + " is stalking " + firstPlayerName);
+      System.out.println("    " + current.name + " is stalking " + frontAlivePlayer.name);
    }
    
    
    
-   // post: output the names inside the graveyard. The most recent kill will be
-   // the first line of the output statement. The format for the output is 
-   // "'someone' is killed by 'their killed'". If the graveyard is empty, the
-   // method produce no output.
+   // post: output the names of the player that have been killed. The most 
+   // recent kill will be the first line of the output statement. The format 
+   // for the output is "'someone' is killed by 'their killer'". If no one has
+   // has been killed, the method produce no outputs.
    public void printGraveyard() {
-      AssassinNode current = playerDead; 
+      AssassinNode current = frontGraveyard; 
       while (current != null) {
          System.out.println("    " + current.name + " was killed by " + current.killer);
          current = current.next;
@@ -65,9 +65,8 @@ public class AssassinManager {
    // pre : takes a string that represents one of the name of the player.
    // the method is not case sensitive.
    // post: returns true is the name is in the killing ring and false otherwise
-   // The method ignores the cases when comparing.
    public boolean killRingContains(String name) {
-      return containsInNodes(playerAlive, name);
+      return containsInNodes(frontAlivePlayer, name);
    }
    
    
@@ -75,16 +74,15 @@ public class AssassinManager {
    // pre : takes a string that represents the name of the player. The method
    // is not case sensitive.
    // post: return true if the player is inside the graveyard (is dead). 
-   // The method ignores the cases wehen comparing.
    public boolean graveyardContains(String name){
-      return containsInNodes(playerDead, name);
+      return containsInNodes(frontGraveyard, name);
    }
    
    
    
    // post: return true if only one player is alive and false otherwise.
    public boolean gameOver() {
-      return playerAlive.next == null;
+      return frontAlivePlayer.next == null;
    }
    
    
@@ -93,7 +91,7 @@ public class AssassinManager {
    // return null.
    public String winner() {
       if (gameOver()) {
-         return playerAlive.name;
+         return frontAlivePlayer.name;
       } else {
          return null;
       }
@@ -114,42 +112,33 @@ public class AssassinManager {
       }
       
       AssassinNode temp = null;
-      if (playerAlive.name.equalsIgnoreCase(name)) {
-         temp = playerAlive;
-         playerAlive = playerAlive.next;
-         AssassinNode lastPlayer = playerAlive;
+      if (frontAlivePlayer.name.equalsIgnoreCase(name)) {
+         temp = frontAlivePlayer;
+         frontAlivePlayer = frontAlivePlayer.next;
+         AssassinNode lastPlayer = frontAlivePlayer;
          while (lastPlayer.next != null) {
             lastPlayer = lastPlayer.next;
          }
          temp.killer = lastPlayer.name;
-         moveToGraveyard(temp);
       } else {
-         AssassinNode current = playerAlive;
+         AssassinNode current = frontAlivePlayer;
          while (!current.next.name.equalsIgnoreCase(name)) {
             current = current.next;
          } 
          temp = current.next;
          current.next = temp.next;
          temp.killer = current.name;
-         moveToGraveyard(temp);
-      }      
-   }
-   
-   
-   
-   // helper method 
-   // pre : takes a player that has been killed.
-   // post: move the player that was killed into the graveyard. 
-   private void moveToGraveyard(AssassinNode temp) {
-      temp.next = playerDead; 
-      playerDead = temp;
+      }
+      temp.next = frontGraveyard; 
+      frontGraveyard = temp;;      
    }
  
- 
+   
    
    // helpper method that reduces redundent codes
-   // pre : takes a front variable to specify the front of the node and the
-   // name of the player. This method is not case sensitive.
+   // pre : takes a front variable to specify which front of the node the 
+   // method is modifying and the name of the player. This method is not case
+   // sensitive.
    // post: returns true if the name is in the node and false otherwise.
    private boolean containsInNodes(AssassinNode front, String name) {
       AssassinNode current = front;
