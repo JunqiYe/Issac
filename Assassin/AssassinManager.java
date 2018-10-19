@@ -111,26 +111,26 @@ public class AssassinManager {
          throw new IllegalStateException();
       }
       
-      AssassinNode temp = null;
+      AssassinNode deadPlayer = null;
       if (frontAlivePlayer.name.equalsIgnoreCase(name)) {
-         temp = frontAlivePlayer;
+         deadPlayer = frontAlivePlayer;
          frontAlivePlayer = frontAlivePlayer.next;
          AssassinNode lastPlayer = frontAlivePlayer;
          while (lastPlayer.next != null) {
             lastPlayer = lastPlayer.next;
          }
-         temp.killer = lastPlayer.name;
+         deadPlayer.killer = lastPlayer.name;
       } else {
          AssassinNode current = frontAlivePlayer;
          while (!current.next.name.equalsIgnoreCase(name)) {
             current = current.next;
          } 
-         temp = current.next;
-         current.next = temp.next;
-         temp.killer = current.name;
+         deadPlayer = current.next;
+         current.next = deadPlayer.next;
+         deadPlayer.killer = current.name;
       }
-      temp.next = frontGraveyard; 
-      frontGraveyard = temp;;      
+      deadPlayer.next = frontGraveyard; 
+      frontGraveyard = deadPlayer;;      
    }
  
    
