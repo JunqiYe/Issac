@@ -129,7 +129,8 @@ public class HangmanManager {
          String temp = pattern;
          for (int i = 0; i < word.length(); i++) {
             if (word.substring(i, i + 1).equals(guess + "")) {
-               temp = replaceChar(temp, word, i);
+               temp = temp.substring(0, i * 2) + word.substring(i, i + 1) + 
+                      temp.substring(i * 2 + 1);
             }
          }
          if (!wordFamily.containsKey(temp)) {
@@ -167,7 +168,8 @@ public class HangmanManager {
          if (!keyPattern.substring(i, i + 1).equals(pattern.substring(i, i + 1)) &&
             pattern.substring(i, i + 1).equals("-")) {
             
-            pattern = replaceChar(pattern, keyPattern, i);
+            pattern = pattern.substring(0, i) + keyPattern.substring(i, i + 1) +
+                      pattern.substring(i + 1);
             count++;
          }
       }
@@ -175,16 +177,5 @@ public class HangmanManager {
          guesses--;
       }
       return count;  
-   }
-   
-   
-   
-   // pre : takes two string and an int
-   // post: replaces the letter in first string at index with the letter in the 
-   // second string at the same index.
-   private String replaceChar(String s1, String s2, int index) {
-      return s1.substring(0, index) + 
-             s2.substring(index, index + 1) + 
-             s1.substring(index + 1);
    }
 }
