@@ -87,7 +87,8 @@ public class HangmanManager {
    
    
    // post: return a String represents the current pattern that the client will
-   // see. The pattern is wither an alphabet letter of a "-". The dash 
+   // see. The pattern is wither an alphabet letter of a "-". The dash. If the
+   // set of word is empty, throw IllegalStateException.
    // represent the letter at that location has not been revealed yet.
    public String pattern() {
       if (wordSet.isEmpty()) {
@@ -98,7 +99,10 @@ public class HangmanManager {
    
    
  
-   // pre : takes a char and test it if the character is in the word
+   // pre : takes a char and test it if the character is in the word. If the
+   // set of words  is empty or the number of guess is less than 1, throw 
+   // IllegalStateException. If the words is not empty and a character passed
+   // was guessed before, throw  IllegalArgumentException.
    // post: returns the number of occurances of the character in the word.
    public int record(char guess) {
       if (guesses < 1 || wordSet.isEmpty()) {
