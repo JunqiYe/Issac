@@ -11,7 +11,6 @@ public class GrammarSolver{
    private SortedMap<String, String> grammar;
    
    
-   
    // pre : takes a list of strings representing the grammars. If the list is 
    // empty or the list contain two of the same grammar, throw 
    // IllegalArgumentException.
@@ -25,14 +24,13 @@ public class GrammarSolver{
       
       for (String string: grammar) {
          String[] grammarArr = string.split("::=");
-         if (this.grammarContains(grammarArr[0])) {
+         if (grammarContains(grammarArr[0])) {
             throw new IllegalArgumentException();
          } else {
-            this.grammar.put(grammarArr[0], grammarArr[1]); //might need trim() here
+            this.grammar.put(grammarArr[0], grammarArr[1].trim()); 
          }
       }
    }
-   
    
    
    // pre : take a string, test if the grammar contains the string.
@@ -40,7 +38,6 @@ public class GrammarSolver{
    public boolean grammarContains(String symbol) { 
       return grammar.containsKey(symbol);
    }
-
    
    
    // pre : takes a string representing the grammar and an int representing the
@@ -61,18 +58,14 @@ public class GrammarSolver{
    }
    
    
-   
-   // public-provate pair for recursion methods. 
+   // public-private pair for recursion methods. 
    // pre : takes a string representing the grammmar symbol.
    // post: return the word that is in the grammar list.
    private String generate(String symbol) {
       String sentence = "";
-      String[] nonTerminals = grammar.get(symbol).split("\\s*\\|\\s*");   
-      String[] individual = nonTerminals[(int)(Math.random() * nonTerminals.length)].split("\\s+");
-      
-      for (String str :individual) {
-         str.trim();
-      }
+      String[] nonTerminals = grammar.get(symbol).split("\\s*\\|\\s*");  
+      String[] individual = nonTerminals[(int)(Math.random() * 
+                            nonTerminals.length)].split("\\s+");
       
       for (int i = 0; i < individual.length; i++) {
          if (grammarContains(individual[i])) {
@@ -85,27 +78,15 @@ public class GrammarSolver{
    }
 
 
-
    // post: return a string that contains all the nonterminal grammars. 
-   // Enclosed in [ and ] separaded by commas.
+   // Enclosed in "[" and "]" separaded by commas.
    public String getSymbols() {
       String symbols = "[";
       for (String key: grammar.keySet()) {
          symbols += key;
-         symbols += ",";
+         symbols += ", ";
       }
-      symbols = symbols.substring(0,symbols.length() - 1) + "]";
+      symbols = symbols.substring(0,symbols.length() - 2) + "]";
       return symbols; 
    }
-   
-//    
-//    public static void main(String[] args) {
-//       String str =" E::=    T     |		E		OP     T    ";
-//       String[] strs = str.split("::=");
-//       for(String s: strs){
-//          System.out.println(s);
-//       }
-//    }
-
-
 }
