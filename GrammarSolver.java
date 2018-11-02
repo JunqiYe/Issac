@@ -1,7 +1,7 @@
 // Issac Ye
 // CSE 143 with Sam Lee
 // HW5
-// This programme takes a prewritten grammar and generate random sentence(s)
+// This program takes a prewritten grammar and generate random sentence(s)
 // with that given grammar.
 
 import java.util.*;
@@ -13,11 +13,11 @@ public class GrammarSolver{
    
    
    // pre : takes a list of strings representing the grammars. If the list is 
-   // empty or the list contain two of the same grammar, throw 
+   // empty or the list contain two or more of the same grammar, throw 
    // IllegalArgumentException.
-   // post: store the given grammar and create GrammarSolver object.
+   // post: creates a GrammarSolver object and store the grammar rules.
    public GrammarSolver(List<String> grammar) {
-      if (grammar.size() == 0 ) {
+      if (grammar.size() == 0) {
          throw new IllegalArgumentException();
       }
    
@@ -35,7 +35,7 @@ public class GrammarSolver{
    
    
    
-   // pre : take a string, test if the grammar contains the string.
+   // pre : take a string, test if the grammar nonterminals contains the symbol
    // post: return true if the string is in the grammar, false otherwise.
    public boolean grammarContains(String symbol) { 
       return grammar.containsKey(symbol);
@@ -72,10 +72,10 @@ public class GrammarSolver{
                             nonTerminals.length)].trim().split("\\s+");
       
       for (int i = 0; i < individual.length; i++) {
-         if (grammarContains(individual[i])) {
-            sentence += generate(individual[i]);
+         if (!grammarContains(individual[i])) {
+            sentence += individual[i] + " ";         
          } else {
-            sentence += individual[i] + " ";
+            sentence += generate(individual[i]);
          }
       }
       return sentence;
@@ -84,7 +84,8 @@ public class GrammarSolver{
 
 
    // post: return a string that contains all the nonterminal grammars. 
-   // Enclosed in "[" and "]" separaded by commas.
+   // Enclosed in "[" and "]" separaded by commas. Nonterminal grammars are
+   // sorted in alphabetical order.
    public String getSymbols() {
       return grammar.keySet().toString(); 
    }
