@@ -67,9 +67,9 @@ public class GrammarSolver{
    // post: return the word that is in the grammar list.
    private String generate(String symbol) {
       String sentence = "";
-      String[] nonTerminals = grammar.get(symbol).split("\\s*\\|\\s*");  
+      String[] nonTerminals = grammar.get(symbol).split("\\|");  
       String[] individual = nonTerminals[(int)(Math.random() * 
-                            nonTerminals.length)].split("\\s+");
+                            nonTerminals.length)].trim().split("\\s+");
       
       for (int i = 0; i < individual.length; i++) {
          if (grammarContains(individual[i])) {
