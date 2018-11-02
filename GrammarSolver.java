@@ -1,14 +1,15 @@
 // Issac Ye
 // CSE 143 with Sam Lee
 // HW5
-// This programme takes a prewritten grammar and generate sentences with the
-// given grammar.
+// This programme takes a prewritten grammar and generate random sentence(s)
+// with that given grammar.
 
 import java.util.*;
 
 public class GrammarSolver{
    
    private SortedMap<String, String> grammar;
+   
    
    
    // pre : takes a list of strings representing the grammars. If the list is 
@@ -33,6 +34,7 @@ public class GrammarSolver{
    }
    
    
+   
    // pre : take a string, test if the grammar contains the string.
    // post: return true if the string is in the grammar, false otherwise.
    public boolean grammarContains(String symbol) { 
@@ -40,8 +42,9 @@ public class GrammarSolver{
    }
    
    
+   
    // pre : takes a string representing the grammar and an int representing the
-   // number of sentences to generate. If the grammar does not contain the 
+   // number of sentence(s) to generate. If the grammar does not contain the 
    // string or the int is less than 0, throw IllegalArgumentException.
    // post: using the string passes through the parameter as grammar, generate 
    // int number of senteces and return the strings in an string array.
@@ -51,11 +54,12 @@ public class GrammarSolver{
       }
 
       String[] sentence = new String[times];
-      for (int i = 0; i < times; i++) {
+      for (int i = 0; i < sentence.length; i++) {
          sentence[i] = generate(symbol);
       }
       return sentence;
    }
+   
    
    
    // public-private pair for recursion methods. 
@@ -78,15 +82,10 @@ public class GrammarSolver{
    }
 
 
+
    // post: return a string that contains all the nonterminal grammars. 
    // Enclosed in "[" and "]" separaded by commas.
    public String getSymbols() {
-      String symbols = "[";
-      for (String key: grammar.keySet()) {
-         symbols += key;
-         symbols += ", ";
-      }
-      symbols = symbols.substring(0,symbols.length() - 2) + "]";
-      return symbols; 
+      return grammar.keySet().toString(); 
    }
 }
