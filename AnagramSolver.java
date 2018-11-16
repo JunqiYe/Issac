@@ -48,14 +48,13 @@ public class AnagramSolver {
       
       LetterInventory inventory = new LetterInventory(s);
       List<String> shorterDict = new ArrayList<String>(); // creating a temperary shorter 
-                                                          // dictionary words
+                                                          // dictionary of words
       
       for (String word: originalDict) {
          if (inventory.subtract(map.get(word)) != null) {// putting words that can be subtracted
             shorterDict.add(word);                       // from the inventory into the temperary
-         }                                               // dictionary words.
+         }                                               // dictionary of words.
       }
-      
       print(inventory, max, new ArrayList<String>(), shorterDict);
    }
    
