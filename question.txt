@@ -1,7 +1,7 @@
 Q:
 Is it an animal?
 Q:
-Does it hop?
+Deos it hop?
 A:
 frog
 A:
