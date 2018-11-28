@@ -12,15 +12,15 @@ public class QuestionNode {
    public QuestionNode right;
 
    public QuestionNode() {
-      data = "computer";
+      this("computer", null, null);
    }
    
    public QuestionNode(String data) {
-      this.data = data;
+      this(data, null, null);
    }
    
    public QuestionNode(String data, QuestionNode left, QuestionNode right) {
-      this(data);
+      this.data = data;
       this.left = left;
       this.right = right;
    }
