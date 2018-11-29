@@ -15,14 +15,14 @@ public class QuestionTree {
 
     private QuestionNode tree;
    
-    // post: creates a QestionTree object. If this is the first time inilizing
+    // post: creates a QestionTree object. If this is the first time initializing
     // the object, the first object that the program will guess is "computer".
 
     public QuestionTree() {
         console = new Scanner(System.in);
-        tree = new QuestionNode();
+        tree = new QuestionNode("computer");
     }
-   
+
 
     // pre : takes a Scanner as input. The input should link to a file that
     // contains the information regarding the questions and answers. The file
@@ -112,8 +112,9 @@ public class QuestionTree {
             } else {
                 System.out.print("What is the name of your object? ");
                 String object = console.nextLine().trim();
-                System.out.print("Please give me a yes/no question that\ndistinguishes " +
-                        "between your object\nand mine--> ");
+                System.out.printf("Please give me a yes/no question " +
+                                  "that%ndistinguishes between your " +
+                                  "object%nand mine--> ");
                 String question = console.nextLine().trim();
                 if (yesTo("And what is the answer for your object?")) {
                     return new QuestionNode(question, new QuestionNode(object), node);
