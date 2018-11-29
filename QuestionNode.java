@@ -12,20 +12,20 @@ public class QuestionNode {
     public QuestionNode right;
 
     public QuestionNode() {
-      this("computer", null, null);
-   }
-   
-    public QuestionNode(String data) {
-      this(data, null, null);
-   }
-   
-    public QuestionNode(String data, QuestionNode left, QuestionNode right) {
-       this.data = data;
-       this.left = left;
-       this.right = right;
+        this("computer", null, null);
     }
-   
+
+    public QuestionNode(String data) {
+        this(data, null, null);
+    }
+
+    public QuestionNode(String data, QuestionNode left, QuestionNode right) {
+        this.data = data;
+        this.left = left;
+        this.right = right;
+    }
+
     public boolean isAnswerNode() {
-      return (left == null) && (right == null);
-   }
+        return (left == null) && (right == null);
+    }
 }
