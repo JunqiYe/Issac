@@ -49,11 +49,4 @@ public class QuestionNode {
         this.left = left;
         this.right = right;
     }
-
-
-    // post: the method returns true if the node is a answer node and false
-    // otherwise.
-    public boolean isAnswerNode() {
-        return (left == null) && (right == null);
-    }
 }

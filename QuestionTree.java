@@ -54,15 +54,15 @@ public class QuestionTree {
     }
    
    
-    // pre : takes PrintStream obejct as the parameter. The PrintStream should
+    // pre : takes PrintStream object as the parameter. The PrintStream should
     // be open for writing.
     // post: The method prints out and stores the the questions and answers in
     // a file defined when creating the PrintStream object. Each individual
-    // output will be on separed lines. Each question will have a "Q:" in before
-    // it and each answer will have a "A:" on a separed line before it. The
+    // output will be on separated lines. Each question will have a "Q:" in before
+    // it and each answer will have a "A:" on a separated line before it. The
     // newly added questions and answers will be updated to the original file.
     public void write(PrintStream output) {
-       write(output, tree);
+        write(output, tree);
     }
    
    
@@ -71,11 +71,11 @@ public class QuestionTree {
     // post: the method goes through the QuestionNode tree and print out the
     // questions and answers in pre-order. Each question and answer will have
     // occupy exactly one line and there is a "Q:" and "A:" in front of the
-    // question and answer repectiverly. The "Q:" and "A:" will occupy one line
+    // question and answer respectively. The "Q:" and "A:" will occupy one line
     // as well.
     private void write(PrintStream output, QuestionNode node) {
         if (node != null) {
-            if (node.isAnswerNode()) {
+            if (isAnswerNode(node)) {
                 output.println("A:");
                 output.println(node.data);
             } else {
@@ -88,11 +88,11 @@ public class QuestionTree {
     }
    
 
-    // post: this method will askes the client questions about the object. The
+    // post: this method will asks the client questions about the object. The
     // client have to respond with "y" or "n" for the program to narrow down the
     // the object and correctly guess the object. If the program fails to guess
     // the object, the program will asks and store the object the client is
-    // thinking and store describtion in a yes or no question. If it is the
+    // thinking and store description in a yes or no question. If it is the
     // first time guessing the object, the program will always guess "computer"
     public void askQuestions() {
         tree = askQuestions(tree);
@@ -106,7 +106,7 @@ public class QuestionTree {
     // method will add the object and the yes-no describtion of the object into
     // the tree.
     private QuestionNode askQuestions(QuestionNode node) {
-        if (node.isAnswerNode()) {
+        if (isAnswerNode(node)) {
             if (yesTo("Would your object happen to be " + node.data + "?")) {
                 System.out.println("Great, I got it right!");
             } else {
@@ -131,8 +131,13 @@ public class QuestionTree {
         }
         return node;
     }
-   
-   
+
+
+    // post: the method returns true if the node is a answer node and false
+    // otherwise.
+    private boolean isAnswerNode(QuestionNode node) {
+        return (node.left == null) && (node.right == null);
+    }
    
     // post: asks the user a question, forcing an answer of "y" or "n";
     //       returns true if the answer was yes, returns false otherwise
