@@ -2,23 +2,23 @@
 // CSE 143 With Sam Lee
 // HW 7
 // This program simulates a tree node with two subbranches. This class is
-// encapsulated within the QuestionTree class which mean the clients will not
+// encapsulated within the QuestionTree class which means the clients will not
 // have access to this class. The node saves information regarding to the
 // object. It can be either a question node that has a yes branch and a no
-// branch, or a answer node with no branches.
+// branch, or an answer node with no branches.
 
 public class QuestionNode {
 
-    public String data; // stores the information. It can be the actual
-                        // object or the yes/no question
+    public String data; // stores the information. It can be an actual
+                        // object or a yes/no question
 
     public QuestionNode left; // left branch of the node which represents
                               // the yes path for the question. If the node is
-                              // the actual object, this is null.
+                              // an object, this is null.
    
     public QuestionNode right; // left branch of the node which represents
                                // the no path for the question. If the node is
-                               // the actual object, this is null.
+                               // an object, this is null.
 
 
     // pre : takes a string data representing the value to put into the node.
@@ -34,7 +34,7 @@ public class QuestionNode {
 
 
     // pre : takes a String data representing the value to put into the node.
-    // The String data should be an object fo rhte client to guess, or a
+    // The String data should be an object for the client to guess, or a
     // yes/no question for client to answer. Also takes a QuestionNode left
     // and a QuestionNode right for the two subbranches. The left branch
     // means the question is answered with yes and the right branch means the
