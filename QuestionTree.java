@@ -28,7 +28,12 @@ public class QuestionTree {
 
     // pre : takes a Scanner as input. The input should link to a file that
     // contains the information regarding the questions and answers. The file
-    // should be legal and organized in pre-order tree format.
+    // should be legal and in standard format for this tree. Standard format
+    // means for this tree means that the file contains nonempty sequence of
+    // line pairs. The first line of each pair is either a "Q:" representing
+    // a question node or a "A:" representing an answer node. The line
+    // following that line is the actual text that is in the node. The nodes
+    // are ordered in pre-order.
     // post: read through the file and store the information. Reading a new
     // file will overwrite the previous information.The information will later
     // be used by the program to guess client's object.
@@ -60,11 +65,13 @@ public class QuestionTree {
     // pre : takes PrintStream object as the parameter. The PrintStream should
     // be open for writing.
     // post: The method prints out and stores the the questions and answers in
-    // a file defined when creating the PrintStream object. Each individual
-    // output will be on separated lines. Each question will have a "Q:" on a
-    // separated line before it and each answer will have a "A:" on a
-    // separated line before it. The newly added questions and answers will
-    // be updated in file.
+    // a file defined when creating the PrintStream object. The format for
+    // the information stored in the file is the standard format.Each individual
+    // output will be on separated lines. Standard format means for this tree
+    // means that the file contains nonempty sequence of line pairs. The
+    // first line of each pair is either a "Q:" representing a question node
+    // or a "A:" representing an answer node. The line following that line is
+    // the actual text that is in the node. The nodes are ordered in pre-order.
     public void write(PrintStream output) {
         write(output, tree);
     }
